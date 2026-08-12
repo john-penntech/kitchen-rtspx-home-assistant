@@ -1,17 +1,11 @@
-# Kitchen RTSPX cameras
+# RTSPX Camera Bridge
 
-This YAML camera platform exposes UniFi Protect secure RTSP links directly to
-Home Assistant's built-in go2rtc provider. It intentionally uses `rtspx://` and
-omits Protect's `?enableSrtp` suffix so the stream is handled by go2rtc instead
-of FFmpeg.
+Install through HACS, restart Home Assistant, then add **RTSPX Camera Bridge**
+from **Settings > Devices & services**. Add one config entry per camera.
 
-Keep real stream links in Home Assistant `secrets.yaml`; do not commit them.
+The stream URL must use `rtspx://`, include a host and stream path, and omit the
+`enableSrtp` query option. URLs are masked in the GUI and redacted from
+diagnostics.
 
-```yaml
-camera:
-  - platform: kitchen_rtspx
-    cameras:
-      - name: Grill Camera
-        unique_id: kitchen_grill_camera
-        stream_source: !secret kitchen_grill_rtspx
-```
+Full installation, migration, and rollback instructions are maintained in the
+[repository README](https://github.com/john-penntech/kitchen-rtspx-home-assistant).
