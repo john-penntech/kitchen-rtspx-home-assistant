@@ -5,7 +5,8 @@
 - Responsible owner and maintainer: `@john-penntech`
 - Source repository: `john-penntech/kitchen-rtspx-home-assistant`
 - Component domain: `kitchen_rtspx`
-- Deployed component version: `1.0.0`
+- Captured baseline version: `1.0.0`
+- Current repository version: `1.1.0`
 
 ## Capture record
 
@@ -29,7 +30,8 @@ repository.
 | `camera.py` | `b2262444f60c55dc4af1064a35b594203911dc2a6200cca643004e8bb9d4ad74` |
 | `manifest.json` | `7d42a214f4ad7630821bc767951ed461d495fcf8405a922d544e0f57562015d7` |
 
-These hashes are also machine-checked by `tests/test_component_contract.py`.
+These hashes identify the immutable v1.0.0 capture and remain verifiable from
+commit `7a4a733`. `SHA256SUMS` records the current release files.
 
 ## Review boundary
 
@@ -38,4 +40,6 @@ found no shell/subprocess execution, file writes, dynamic code execution, or
 direct network implementation. Package signing and the identity of any author
 before this capture remain unknown; this repository establishes provenance from
 the captured deployment forward rather than reconstructing undocumented past
-history.
+history. Version 1.1.0 and later changes are attributable to the public Git
+history, pull requests, release tags, and pinned validation workflows in this
+repository.

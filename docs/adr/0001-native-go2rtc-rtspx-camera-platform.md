@@ -1,6 +1,6 @@
 # ADR 0001: Use a minimal YAML camera platform for native go2rtc RTSPX
 
-- Status: Accepted
+- Status: Superseded by ADR 0002 for configuration; native stream decision retained
 - Date: 2026-08-12
 - Owner: `@john-penntech`
 

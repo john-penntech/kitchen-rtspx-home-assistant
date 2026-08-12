@@ -2,8 +2,9 @@
 
 ## Supported version
 
-Version 1.0.0 is the captured baseline. Security fixes should be made on the
-default branch and released with a new version and documented upgrade path.
+Version 1.1.x is supported. Version 1.0.0 is retained only as the captured YAML
+baseline. Security fixes are made on the default branch and released with a new
+version and documented upgrade path.
 
 ## Reporting
 
@@ -16,6 +17,7 @@ issue.
 
 This component returns the configured stream string to Home Assistant's native
 camera/go2rtc provider. It does not implement network transport, authentication,
-or authorization. Protect stream URLs are credentials and must stay in local
-`secrets.yaml`; the Home Assistant instance and camera network must not be
-exposed merely because this source repository is public.
+or authorization. Protect stream URLs are credentials. Version 1.1.x stores
+them in Home Assistant config-entry data, masks them in the setup UI, and redacts
+them from diagnostics. The Home Assistant instance and camera network must not
+be exposed merely because this source repository is public.

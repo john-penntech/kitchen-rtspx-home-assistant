@@ -1,3 +1,22 @@
-"""Kitchen RTSPX camera platform for Home Assistant's native go2rtc provider."""
+"""RTSPX Camera Bridge for Home Assistant's native go2rtc provider."""
 
-DOMAIN = "kitchen_rtspx"
+from __future__ import annotations
+
+from homeassistant.config_entries import ConfigEntry
+from homeassistant.const import Platform
+from homeassistant.core import HomeAssistant
+
+from .const import DOMAIN
+
+PLATFORMS = [Platform.CAMERA]
+
+
+async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
+    """Set up an RTSPX camera from a config entry."""
+    await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
+    return True
+
+
+async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
+    """Unload an RTSPX camera config entry."""
+    return await hass.config_entries.async_unload_platforms(entry, PLATFORMS)

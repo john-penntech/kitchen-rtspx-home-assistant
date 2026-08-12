@@ -1,0 +1,36 @@
+{
+  "title": "RTSPX Camera Bridge",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Add an RTSPX camera",
+        "description": "Add one camera. Repeat this flow for each camera. The stream URL is stored in Home Assistant and is masked in this form and diagnostics.",
+        "data": {
+          "name": "Camera name",
+          "unique_id": "Camera ID",
+          "stream_source": "RTSPX stream URL"
+        },
+        "data_description": {
+          "unique_id": "A stable lowercase ID such as patio_camera. Keep the same ID when migrating an existing camera.",
+          "stream_source": "The full rtspx:// URL. Remove the enableSrtp query option before saving."
+        }
+      },
+      "reconfigure": {
+        "title": "Reconfigure camera",
+        "description": "Update the display name or protected RTSPX URL. The stable Camera ID cannot be changed here.",
+        "data": {
+          "name": "Camera name",
+          "stream_source": "RTSPX stream URL"
+        }
+      }
+    },
+    "error": {
+      "invalid_rtspx_url": "Enter a complete rtspx:// URL with a host and stream path.",
+      "enable_srtp_not_allowed": "Remove the enableSrtp query option; Home Assistant's native go2rtc path does not use it."
+    },
+    "abort": {
+      "already_configured": "A camera with this Camera ID is already configured.",
+      "reconfigure_successful": "The camera configuration was updated."
+    }
+  }
+}

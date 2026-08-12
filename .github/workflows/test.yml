@@ -17,5 +17,5 @@ jobs:
           python-version: "3.13"
       - name: Compile source
         run: python -m compileall -q custom_components tests
-      - name: Verify snapshot and configuration contract
+      - name: Verify release and configuration contract
         run: python -m unittest discover -s tests -v
