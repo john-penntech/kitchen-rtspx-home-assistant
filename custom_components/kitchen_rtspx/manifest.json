@@ -1,0 +1,8 @@
+{
+  "domain": "kitchen_rtspx",
+  "name": "Kitchen RTSPX Cameras",
+  "codeowners": [],
+  "documentation": "https://github.com/AlexxIT/go2rtc/blob/master/internal/rtsp/README.md",
+  "iot_class": "local_polling",
+  "version": "1.0.0"
+}

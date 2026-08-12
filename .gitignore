@@ -1,0 +1,17 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+
+# Home Assistant runtime data and secrets must never enter this repository.
+secrets.yaml
+configuration.yaml
+.storage/
+home-assistant_v2.db*
+*.log
+*.mp3
+*.wav
+*.flac
