@@ -30,7 +30,7 @@ class ComponentContractTests(unittest.TestCase):
     def test_manifest_is_hacs_ready(self) -> None:
         manifest = json.loads((COMPONENT / "manifest.json").read_text("utf-8"))
         self.assertEqual(manifest["domain"], "kitchen_rtspx")
-        self.assertEqual(manifest["version"], "1.1.0")
+        self.assertEqual(manifest["version"], "1.1.1")
         self.assertTrue(manifest["config_flow"])
         self.assertEqual(manifest["integration_type"], "device")
         self.assertEqual(manifest["iot_class"], "local_push")
@@ -68,6 +68,38 @@ class ComponentContractTests(unittest.TestCase):
             {"async_setup_entry", "async_setup_platform"} <= camera_functions
         )
         self.assertIn("KitchenRtspxConfigFlow", flow_classes)
+
+        flow_class = next(
+            node
+            for node in flow_tree.body
+            if isinstance(node, ast.ClassDef)
+            and node.name == "KitchenRtspxConfigFlow"
+        )
+        flow_methods = {
+            node.name
+            for node in flow_class.body
+            if isinstance(node, ast.AsyncFunctionDef)
+        }
+        self.assertIn("async_step_import", flow_methods)
+
+        legacy_setup = next(
+            node
+            for node in camera_tree.body
+            if isinstance(node, ast.AsyncFunctionDef)
+            and node.name == "async_setup_platform"
+        )
+        called_attributes = {
+            node.func.attr
+            for node in ast.walk(legacy_setup)
+            if isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute)
+        }
+        called_names = {
+            node.func.id
+            for node in ast.walk(legacy_setup)
+            if isinstance(node, ast.Call) and isinstance(node.func, ast.Name)
+        }
+        self.assertIn("async_init", called_attributes)
+        self.assertNotIn("async_add_entities", called_names)
 
     def test_url_validation(self) -> None:
         const = _load_const_module()

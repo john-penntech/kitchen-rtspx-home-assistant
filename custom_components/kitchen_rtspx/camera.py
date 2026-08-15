@@ -11,7 +11,7 @@ from homeassistant.components.camera import (
     Camera,
     CameraEntityFeature,
 )
-from homeassistant.config_entries import ConfigEntry
+from homeassistant.config_entries import SOURCE_IMPORT, ConfigEntry
 from homeassistant.const import CONF_NAME
 from homeassistant.core import HomeAssistant
 import homeassistant.helpers.config_validation as cv
@@ -79,8 +79,13 @@ async def async_setup_platform(
     async_add_entities: AddEntitiesCallback,
     discovery_info: dict[str, Any] | None = None,
 ) -> None:
-    """Set up configured kitchen cameras."""
-    async_add_entities(KitchenRtspxCamera(item) for item in config[CONF_CAMERAS])
+    """Import legacy YAML cameras as normal Home Assistant config entries."""
+    for item in config[CONF_CAMERAS]:
+        await hass.config_entries.flow.async_init(
+            DOMAIN,
+            context={"source": SOURCE_IMPORT},
+            data=dict(item),
+        )
 
 
 async def async_setup_entry(
