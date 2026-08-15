@@ -7,5 +7,5 @@
   "integration_type": "device",
   "iot_class": "local_push",
   "issue_tracker": "https://github.com/john-penntech/kitchen-rtspx-home-assistant/issues",
-  "version": "1.1.0"
+  "version": "1.1.1"
 }

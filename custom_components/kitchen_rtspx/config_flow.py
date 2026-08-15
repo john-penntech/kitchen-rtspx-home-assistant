@@ -56,6 +56,15 @@ class KitchenRtspxConfigFlow(ConfigFlow, domain=DOMAIN):
 
     VERSION = 1
 
+    async def async_step_import(
+        self, import_data: dict[str, Any]
+    ) -> ConfigFlowResult:
+        """Import one legacy YAML camera without exposing its stream URL."""
+        data = _validate_input(import_data)
+        await self.async_set_unique_id(data[CONF_UNIQUE_ID])
+        self._abort_if_unique_id_configured()
+        return self.async_create_entry(title=data[CONF_NAME], data=data)
+
     async def async_step_user(
         self, user_input: dict[str, Any] | None = None
     ) -> ConfigFlowResult:

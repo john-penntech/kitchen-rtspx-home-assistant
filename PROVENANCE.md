@@ -6,7 +6,7 @@
 - Source repository: `john-penntech/kitchen-rtspx-home-assistant`
 - Component domain: `kitchen_rtspx`
 - Captured baseline version: `1.0.0`
-- Current repository version: `1.1.0`
+- Current repository version: `1.1.1`
 
 ## Capture record
 

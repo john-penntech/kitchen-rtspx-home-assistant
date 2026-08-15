@@ -5,8 +5,10 @@
 [![Hassfest](https://github.com/john-penntech/kitchen-rtspx-home-assistant/actions/workflows/hassfest.yml/badge.svg)](https://github.com/john-penntech/kitchen-rtspx-home-assistant/actions/workflows/hassfest.yml)
 
 `kitchen_rtspx` hands local `rtspx://` camera sources directly to Home
-Assistant's built-in go2rtc stream provider. Version 1.1.0 adds a GUI config
-flow, HACS distribution, protected reconfiguration, and redacted diagnostics.
+Assistant's built-in go2rtc stream provider. Version 1.1.1 adds automatic,
+credential-safe migration from the legacy YAML platform to normal GUI config
+entries, building on the HACS distribution, protected reconfiguration, and
+redacted diagnostics introduced in v1.1.0.
 
 This integration is intended for local streams such as secure UniFi Protect
 links. It deliberately rejects non-RTSPX URLs and any `enableSrtp` query option,
@@ -38,18 +40,21 @@ change a camera name or URL later.
 
 ## Migrate from the v1.0.0 YAML platform
 
-Version 1.1.0 still understands the original YAML so upgrades are reversible.
-For each existing camera, record its `name`, `unique_id`, and secret-backed URL.
-Then:
+Version 1.1.1 imports every legacy YAML camera as a normal config entry during
+the first restart. The import preserves the camera name, stable `unique_id`,
+credential-bearing stream URL, and existing entity ID without displaying or
+logging the URL.
 
-1. Back up `/config`, install v1.1.0, and restart while keeping the YAML.
-2. Remove the `platform: kitchen_rtspx` block and run `ha core check`.
-3. Restart Home Assistant.
-4. Add each camera through the GUI using its old `unique_id` as **Camera ID**.
-5. Verify the entity IDs and dashboards before removing the backup.
+1. Back up `/config`, install v1.1.1, and restart while keeping the YAML.
+2. Verify that each camera appears under **Settings > Devices & services >
+   RTSPX Camera Bridge** and that existing dashboard entity IDs still work.
+3. Remove the entire `platform: kitchen_rtspx` YAML block.
+4. Run `ha core check`, restart, and verify the same config entries and entity
+   IDs again.
 
-Reusing the old Camera ID lets Home Assistant's entity registry retain the
-existing entity ID. Never paste a stream URL into an issue, log, screenshot, or
+Leaving the YAML in place is safe during verification: later restarts detect
+the already-imported Camera IDs and do not create duplicates or overwrite GUI
+reconfiguration. Never paste a stream URL into an issue, log, screenshot, or
 Git repository.
 
 ## Manual installation
