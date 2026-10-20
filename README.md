@@ -5,7 +5,17 @@
 [![Hassfest](https://github.com/john-penntech/kitchen-rtspx-home-assistant/actions/workflows/hassfest.yml/badge.svg)](https://github.com/john-penntech/kitchen-rtspx-home-assistant/actions/workflows/hassfest.yml)
 
 `kitchen_rtspx` hands local `rtspx://` camera sources directly to Home
-Assistant's built-in go2rtc stream provider. Version 1.1.1 adds automatic,
+Assistant's built-in go2rtc stream provider. Version 1.1.4 adds native HLS
+fallback through that server's existing loopback RTSP listener, with an
+on-demand H.264/AAC compatibility stream capped at 1280 pixels wide.
+This lets browsers without an HEVC decoder display an H.265 camera. It prevents
+the `Protocol not found` failure caused by passing an RTSPX URL to PyAV when
+WebRTC is unavailable. It requires Home Assistant 2026.8.1 or later with its
+HA-managed go2rtc server; an external go2rtc server is outside this fallback's
+supported configuration. No extra proxy, listener, or network permission is
+introduced. Camera credentials stay behind Home Assistant's normal access path.
+
+Version 1.1.1 adds automatic,
 credential-safe migration from the legacy YAML platform to normal GUI config
 entries, building on the HACS distribution, protected reconfiguration, and
 redacted diagnostics introduced in v1.1.0.
@@ -75,6 +85,17 @@ entry and legacy setup paths, URL policy, and absence of high-risk execution or
 write primitives. See [ROLLBACK.md](ROLLBACK.md),
 [PROVENANCE.md](PROVENANCE.md), and the
 [architecture decision](docs/adr/0001-native-go2rtc-rtspx-camera-platform.md).
+
+## Upgrade to 1.1.4
+
+Back up the component directory and entity/config-entry registries, install the
+updated component, run `ha core check`, then restart Home Assistant. Confirm
+both decoded video and advancing playback on the dashboard. A fresh thumbnail
+alone does not verify live video. Ensure the dashboard entity belongs to
+`kitchen_rtspx`, rather than an older Generic Camera entity with a similar name.
+For rollback, restore the previous component directory and restart after
+configuration validation; use the supported entity settings UI to reverse an
+entity-ID reassignment. Never restore registry storage into a running instance.
 
 This is an independent local integration, not an official Home Assistant,
 HACS, go2rtc, or Ubiquiti project. Report bugs through
