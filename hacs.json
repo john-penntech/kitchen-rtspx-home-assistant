@@ -1,3 +1,4 @@
 {
-  "name": "RTSPX Camera Bridge"
+  "name": "RTSPX Camera Bridge",
+  "homeassistant": "2026.8.1"
 }

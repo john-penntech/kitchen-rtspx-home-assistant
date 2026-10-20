@@ -30,7 +30,8 @@ class ComponentContractTests(unittest.TestCase):
     def test_manifest_is_hacs_ready(self) -> None:
         manifest = json.loads((COMPONENT / "manifest.json").read_text("utf-8"))
         self.assertEqual(manifest["domain"], "kitchen_rtspx")
-        self.assertEqual(manifest["version"], "1.1.1")
+        self.assertEqual(manifest["version"], "1.1.4")
+        self.assertEqual(manifest["dependencies"], ["go2rtc", "stream"])
         self.assertTrue(manifest["config_flow"])
         self.assertEqual(manifest["integration_type"], "device")
         self.assertEqual(manifest["iot_class"], "local_push")
