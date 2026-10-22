@@ -1,5 +1,7 @@
 # RTSPX Camera Bridge for Home Assistant
 
+<img src="custom_components/kitchen_rtspx/brand/icon.png" alt="RTSPX Camera Bridge" width="96" height="96">
+
 [![Test](https://github.com/john-penntech/kitchen-rtspx-home-assistant/actions/workflows/test.yml/badge.svg)](https://github.com/john-penntech/kitchen-rtspx-home-assistant/actions/workflows/test.yml)
 [![HACS](https://github.com/john-penntech/kitchen-rtspx-home-assistant/actions/workflows/hacs.yml/badge.svg)](https://github.com/john-penntech/kitchen-rtspx-home-assistant/actions/workflows/hacs.yml)
 [![Hassfest](https://github.com/john-penntech/kitchen-rtspx-home-assistant/actions/workflows/hassfest.yml/badge.svg)](https://github.com/john-penntech/kitchen-rtspx-home-assistant/actions/workflows/hassfest.yml)
@@ -30,8 +32,8 @@ which would bypass the intended native go2rtc path.
 2. Open HACS, select the three-dot menu, then **Custom repositories**.
 3. Add `https://github.com/john-penntech/kitchen-rtspx-home-assistant` as an
    **Integration** repository.
-4. Search for **RTSPX Camera Bridge**, download the latest release, and restart
-   Home Assistant.
+4. Search for **RTSPX Camera Bridge** and download the latest release. Follow
+   [Update with HACS](#update-with-hacs) to back up and apply the update.
 
 [![Open your Home Assistant instance and add this repository to HACS](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=john-penntech&repository=kitchen-rtspx-home-assistant&category=integration)
 
@@ -47,6 +49,37 @@ search for **RTSPX Camera Bridge**, and enter:
 
 Repeat the flow for each camera. Use the integration's **Configure** action to
 change a camera name or URL later.
+
+## Update with HACS
+
+1. Create a Home Assistant backup before downloading an update.
+2. Open **Settings > System > Updates**, select **RTSPX Camera Bridge**, review
+   the release notes, and select **Update**. HACS downloads the new files.
+3. Download any other integration updates you want to apply, then restart Home
+   Assistant **once**, when a brief interruption to cameras, automations, and
+   voice control is convenient. Open **Settings > System**, select the power
+   menu, then **Restart Home Assistant**. If you maintain YAML configuration,
+   validate it before restarting and resolve any errors first.
+4. When Home Assistant is ready, reopen your camera dashboard and confirm that
+   live video moves. A thumbnail alone does not verify playback.
+
+A restart loads the updated Python integration code. Reloading the integration
+or refreshing your browser does not replace that code. This integration does
+not restart Home Assistant automatically; HACS owns the download and
+pending-restart status. Your camera settings and entity IDs are preserved.
+
+If playback regresses, use HACS **Redownload** to select the previous release,
+then restart and verify live video. See [ROLLBACK.md](ROLLBACK.md) for recovery.
+
+### Missing image in HACS
+
+The integration includes its camera icon in `brand/icon.png`. Some HACS
+screens still request images from the central brands service and show
+"icon not available" for custom integrations. Our release notes include the
+image directly. The small update-header image remains subject to the
+[upstream HACS limitation](https://github.com/hacs/integration/issues/5402);
+repeatedly restarting or reinstalling this integration will not repair it.
+See [the presentation review](docs/hacs-update-experience.md) for details.
 
 ## Migrate from the v1.0.0 YAML platform
 
